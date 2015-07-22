@@ -1,0 +1,48 @@
+---
+# Fetch dependencies (platform-specific)
+- name: install dependencies
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=86400 state=present
+  with_items:
+    - gcc 
+    - make
+    - libc6-dev
+    - libtool
+    - autoconf
+    - liburcu-dev
+    - libgnutls28-dev
+    - libjansson-dev
+  when: ansible_os_family == "Debian" 
+- name: dependencies (FreeBSD)
+  pkgng: name={{ item }} state=present
+  with_items:
+    - security/nettle
+    - security/gnutls
+    - devel/jansson
+    - sysutils/liburcu
+    - databases/lmdb
+  when: ansible_os_family == "FreeBSD"
+
+# Clone and build from sources
+- name: git clone
+  git: repo=http://gitlab.labs.nic.cz/labs/knot.git dest=/usr/local/src/knot version={{ knot_git_branch }} update=yes
+- name: configure
+  shell: autoreconf -if && ./configure --prefix={{ knot_install_dir }} chdir=/usr/local/src/knot creates=/usr/local/src/knot/Makefile
+- name: build
+  command: make -j{{ansible_processor_count}} chdir=/usr/local/src/knot creates=/usr/local/src/knot/src/knotd
+- name: install
+  command: make install chdir=/usr/local/src/knot creates={{ knot_install_dir }}/sbin/knotd
+
+# Post-installation
+- name: add knot user
+  user:
+    name={{ knot_user }}
+    comment="Knot DNS"
+    home={{ knot_install_dir }}
+    shell=/bin/false
+    system=yes
+- name: make sure directories are writeable
+  file: path={{ item }}  state=directory owner={{ knot_user }}
+  with_items:
+    - "{{ knot_install_dir }}/etc/knot"
+    - "{{ knot_install_dir }}/var/lib/knot"
+    - "{{ knot_install_dir }}/var/run/lib/knot"

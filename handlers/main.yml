@@ -1,0 +1,3 @@
+---
+- name: restart knotd
+  service: "name={{ knot_daemon }} state=restarted"

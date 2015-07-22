@@ -1,0 +1,8 @@
+---
+## Installation options
+knot_from_source: true
+knot_from_pkgs: false
+knot_git_branch: master
+knot_install_dir: /usr/local
+knot_user: knot
+## Configuration options

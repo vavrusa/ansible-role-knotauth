@@ -12,13 +12,8 @@ log:
   - target: syslog
     any: info
 
-# Default template
-template:
-  - id: default
-    storage: "{{ knot_install_dir }}/var/lib/knot"
-
 # Server-specific extras
-{{ knot_config_extras }}
+{{ knot_extras }}
 
 # Zone lists
 zone:

@@ -14,7 +14,7 @@ knot_interfaces:
   - "{{ ansible_default_ipv6.address }}"
 knot_zones:
   - { name: 'example.com', template: 'default' }
-knot_config_extras: |
+knot_extras: |
   server:
     rate-limit: 10
 

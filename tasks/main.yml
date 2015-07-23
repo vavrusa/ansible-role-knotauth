@@ -1,7 +1,6 @@
 ---
 - name: install from source
   include: from_source.yml
-  when: knot_from_source and not knot_from_pkgs
+  when: knot_from_source
 - name: install from packages
   include: from_pkgs.yml
-  when: knot_from_pkgs is defined and knot_from_pkgs

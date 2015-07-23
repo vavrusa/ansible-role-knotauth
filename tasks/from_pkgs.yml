@@ -1,14 +1,18 @@
 ---
-# Debian or Ubuntu
+# Ubuntu
+- name: repository (Ubuntu)
+  apt_repository: repo="ppa:cz.nic-labs/knot-dns" state=present
+  when: ansible_os_family == "Ubuntu"
+# Debian
 - name: repository keys (Debian)
   apt_key: url=http://deb.knot-dns.cz/knot/apt.key state=present
+  when: ansible_os_family == "Debian"
 - name: repository (Debian)
-  apt_repository: repo='deb http://deb.knot-dns.cz/knot/ {{ ansible_lsb['codename']}} main' state=present
-- name: packages (Debian)
-  apt: pkg={{ item }} update_cache=yes state=present
-  with_items:
-    - knot
-  when: ansible_os_family == "Debian" 
+  apt_repository: repo="deb http://deb.knot-dns.cz/knot/ {{ ansible_lsb.codename }} main" state=present
+  when: ansible_os_family == "Debian"
+- name: packages (Debian/Ubuntu)
+  apt: pkg=knot update_cache=yes state=present
+  when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
 
 # FreeBSD
 - name: packages (FreeBSD)
@@ -17,5 +21,16 @@
     - dns/knot2
   when: ansible_os_family == "FreeBSD"
 
+# Fedora
+- name: packages (Fedora)
+  dnf: >
+    name=knot
+    state=present
+  when: ansible_os_family == "Fedora"
+
 # RedHat
-# TODO:
+- name: packages (RedHat)
+  yum: >
+    name=knot
+    state=present
+  when: ansible_os_family == "RedHat" or ansible_os_family == "CentOS"

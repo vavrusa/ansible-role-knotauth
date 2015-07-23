@@ -1,8 +1,9 @@
 ---
 ## Installation options
-knot_from_source: true
-knot_from_pkgs: false
+knot_from_source: false
 knot_git_branch: master
-knot_install_dir: /usr/local
+knot_install_dir: ""
 knot_user: knot
+knot_group: knot
+knot_daemon: knot
 ## Configuration options

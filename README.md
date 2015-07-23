@@ -13,8 +13,7 @@ Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-	knot_from_source: true
-	knot_from_pkgs: false
+	knot_from_source: false # Default
 
 Set either of this to `true` or `false` to choose installation from sources or distribution packages.
 
@@ -27,8 +26,13 @@ If building from sources, pick a git branch or tag.
 If building from sources, pick an installation prefix (`/usr/local` means the binary will be installed in `/usr/local/sbin/knotd` for example).
 
 	knot_user: knot
+	knot_group: knot
 
 Create a user for running Knot DNS daemon.
+
+	knot_daemon: knot
+
+Pick a different name for Knot DNS daemon service.
 
 Dependencies
 ------------
@@ -42,7 +46,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: knot.auth, knot_from_pkgs: true }
+         - { role: knot.auth }
 
 License
 -------
@@ -52,6 +56,6 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+* [www.knot-dns.cz][knot-dns]
 
 [knot-dns]: http://www.knot-dns.cz

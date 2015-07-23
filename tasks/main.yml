@@ -5,6 +5,13 @@
 - name: install from packages
   include: from_pkgs.yml
   when: not knot_from_source
+
+# Post-install
+- name: set config path (FreeBSD)
+  lineinfile: dest=/etc/rc.conf regexp='^knot_config=' line="knot_config={{ knot_install_dir }}/etc/knot/knot.conf"
+  when: ansible_os_family == "FreeBSD"
+
+# Configuration
 - name: configure knot
   template: >
     src=knot.conf.j2
@@ -15,3 +22,8 @@
     validate="knotc -c %s checkconf"
   notify: restart knot
   tags: dns
+- name: enable knot
+  service: >
+    name={{ knot_daemon }}
+    enabled=True
+    state=started

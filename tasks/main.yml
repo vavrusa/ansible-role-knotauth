@@ -4,3 +4,14 @@
   when: knot_from_source
 - name: install from packages
   include: from_pkgs.yml
+  when: not knot_from_source
+- name: configure knot
+  template: >
+    src=knot.conf.j2
+    dest={{ knot_install_dir }}/etc/knot/knot.conf
+    mode=640
+    owner={{ knot_user }}
+    group={{ knot_group }}
+    validate="knotc -c %s checkconf"
+  notify: restart knot
+  tags: dns

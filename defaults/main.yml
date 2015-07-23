@@ -7,3 +7,14 @@ knot_user: knot
 knot_group: knot
 knot_daemon: knot
 ## Configuration options
+knot_interfaces:
+  - 127.0.0.1@5300
+  - ::1@5300
+  - "{{ ansible_default_ipv4.address }}"
+  - "{{ ansible_default_ipv6.address }}"
+knot_zones:
+  - { name: 'example.com', template: 'default' }
+knot_config_extras: |
+  server:
+    rate-limit: 10
+

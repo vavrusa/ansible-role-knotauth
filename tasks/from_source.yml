@@ -33,13 +33,19 @@
   command: make install chdir=/usr/local/src/knot creates={{ knot_install_dir }}/sbin/knotd
 
 # Post-installation
+- name: add knot group
+  group:
+    name={{ knot_group }}
+    comment="Knot DNS"
 - name: add knot user
   user:
     name={{ knot_user }}
     comment="Knot DNS"
     home={{ knot_install_dir }}
     shell=/bin/false
+    groups={{knot_group}}
     system=yes
+
 - name: make sure directories are writeable
   file: path={{ item }}  state=directory owner={{ knot_user }}
   with_items:

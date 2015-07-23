@@ -1,0 +1,36 @@
+# {{ ansible_managed }}
+
+# Server options
+server:
+  rundir: {{ knot_install_dir }}/var/run/knot
+  user: "{{ knot_user }}:{{ knot_group }}"
+{% for addr in knot_interfaces %}
+  listen: {{ addr }}
+{% endfor %}
+
+log:
+  - target: syslog
+    any: info
+
+# Default template
+template:
+  - id: default
+    storage: "{{ knot_install_dir }}/var/lib/knot"
+
+# Server-specific extras
+{{ knot_config_extras }}
+
+# Zone lists
+zone:
+{% for zone in knot_zones %}
+  - domain: {{ zone.name }}
+{% if 'module' in zone %}
+    template: {{ zone.template }}
+{% endif %}
+{% if 'module' in zone %}
+    module: {{ zone.module }}
+{% endif %}
+{% if 'file' in zone %}
+    file: {{ zone.file }}
+{% endif %}
+{% endfor %}

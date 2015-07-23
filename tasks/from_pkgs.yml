@@ -3,6 +3,7 @@
 - name: repository (Ubuntu)
   apt_repository: repo="ppa:cz.nic-labs/knot-dns" state=present
   when: ansible_os_family == "Ubuntu"
+
 # Debian
 - name: repository keys (Debian)
   apt_key: url=http://deb.knot-dns.cz/knot/apt.key state=present

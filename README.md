@@ -1,7 +1,7 @@
 Knot DNS authoritative
 ======================
 
-Installs [Knot DNS][knot-dns] authoritative DNS server on Debian/Ubuntu or FreeBSD.
+Installs [Knot DNS][knot-dns] authoritative DNS server on Debian/Ubuntu/RedHat or FreeBSD.
 
 Requirements
 ------------

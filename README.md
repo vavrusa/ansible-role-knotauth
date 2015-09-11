@@ -93,14 +93,18 @@ yourself, for example with [synchronize][ansible-synchronize]:
          - role: knot.auth
            knot_zones:
             - { name: 'example.com' }
+           knot_keys:
+            - { id: 'slave1_key', algorithm: 'hmac-md5', secret: 'Wg==' }
            knot_extras: |
              remote:
                - id: slave01
                  address: 192.168.2.1
+                 key: slave_key
              acl:
                - id: slaves
                  address: 192.168.2.0/24
                  action: transfer
+                 key: slave_key
              template:
                - id: default
                  storage: /var/lib/zones

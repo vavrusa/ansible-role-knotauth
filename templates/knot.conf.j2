@@ -19,7 +19,7 @@ log:
 zone:
 {% for zone in knot_zones %}
   - domain: {{ zone.name }}
-{% if 'module' in zone %}
+{% if 'template' in zone %}
     template: {{ zone.template }}
 {% endif %}
 {% if 'module' in zone %}

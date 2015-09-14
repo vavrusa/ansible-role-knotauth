@@ -12,8 +12,17 @@ log:
   - target: syslog
     any: info
 
-# Server-specific extras
-{{ knot_extras }}
+# Key lists
+key:
+{% for key in knot_keys %}
+  - id: {{ key.id }}
+{% if 'algorithm' in key %}
+    algorithm: {{ key.algorithm }}
+{% endif %}
+{% if 'secret' in key %}
+    secret: {{ key.secret }}
+{% endif %}
+{% endfor %}
 
 # Zone lists
 zone:
@@ -29,3 +38,7 @@ zone:
     file: {{ zone.file }}
 {% endif %}
 {% endfor %}
+
+# Server-specific extras
+{{ knot_extras }}
+

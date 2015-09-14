@@ -12,6 +12,8 @@ knot_interfaces:
   - ::1@5300
   - "{{ ansible_default_ipv4.address }}"
   - "{{ ansible_default_ipv6.address }}"
+knot_keys:
+  - { id: 'slave1_key', algorithm: 'hmac-md5', secret: 'Wg==' }
 knot_zones:
   - { name: 'example.com', template: 'default' }
 knot_extras: |

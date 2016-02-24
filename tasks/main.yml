@@ -27,3 +27,7 @@
     name={{ knot_daemon }}
     enabled=True
     state=started
+
+- include: zones.yml
+  tags: zones
+  when: knot_zones is defined

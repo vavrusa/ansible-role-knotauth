@@ -19,7 +19,7 @@
     mode=640
     owner={{ knot_user }}
     group={{ knot_group }}
-    validate="knotc -c %s checkconf"
+    validate="knotc -c %s conf-check"
   notify: restart knot
   tags: dns
 - name: enable knot

@@ -6,10 +6,10 @@
 
 # Debian
 - name: repository keys (Debian)
-  apt_key: url=http://deb.knot-dns.cz/knot/apt.key state=present
+  apt_key: url=https://deb.knot-dns.cz/knot/apt.gpg state=present
   when: ansible_distribution == "Debian"
 - name: repository (Debian)
-  apt_repository: repo="deb http://deb.knot-dns.cz/knot/ {{ ansible_lsb.codename }} main" state=present
+  apt_repository: repo="deb https://deb.knot-dns.cz/knot/ {{ ansible_lsb.codename }} main" state=present
   when: ansible_distribution == "Debian"
 
 # Debian Family (Debian, Ubuntu)

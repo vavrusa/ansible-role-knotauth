@@ -11,22 +11,29 @@
   lineinfile: dest=/etc/rc.conf regexp='^knot_config=' line="knot_config={{ knot_install_dir }}/etc/knot/knot.conf"
   when: ansible_os_family == "FreeBSD"
 
+- name: ensure configuration directory exists
+  file:
+    state: directory
+    path: "{{ knot_install_dir }}/etc/knot"
+    owner: "{{ knot_user }}"
+    group: "{{ knot_group }}"
+
 # Configuration
 - name: configure knot
-  template: >
-    src=knot.conf.j2
-    dest={{ knot_install_dir }}/etc/knot/knot.conf
-    mode=640
-    owner={{ knot_user }}
-    group={{ knot_group }}
-    validate="knotc -c %s checkconf"
+  template:
+    src: knot.conf.j2
+    dest: "{{ knot_install_dir }}/etc/knot/knot.conf"
+    mode: 640
+    owner: "{{ knot_user }}"
+    group: "{{ knot_group }}"
+    validate: "knotc -c %s conf-check"
   notify: restart knot
   tags: dns
 - name: enable knot
-  service: >
-    name={{ knot_daemon }}
-    enabled=True
-    state=started
+  service:
+    name: "{{ knot_daemon }}"
+    enabled: True
+    state: started
 
 - include: zones.yml
   tags: zones

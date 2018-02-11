@@ -34,7 +34,8 @@ zone:
 {% if 'module' in zone %}
     module: {{ zone.module }}
 {% endif %}
-{% if 'file' in zone %}
+{% if 'file' in zone and 'storage' in zone %}
+    storage: {{ zone.storage }}
     file: {{ zone.file }}
 {% endif %}
 {% endfor %}

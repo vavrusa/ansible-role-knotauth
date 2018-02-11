@@ -1,17 +1,33 @@
+- name: ensure zones storage directory exists
+  file:
+    state: directory
+    path: "{{ item.storage }}"
+    recurse: yes
+    owner: "{{ knot_user }}"
+    group: "{{ knot_group }}"
+  with_items: "{{ knot_zones }}"
+
 - name: apply zone files
-  copy: src={{ item.src_file }} dest={{ knot_install_dir }}/etc/knot/{{ item.name }}.zone owner={{ knot_user }} group={{ knot_group }}
+  copy:
+    src: "{{ item.src_file }}"
+    dest: "{{ item.storage }}/{{ item.file }}"
+    owner: "{{ knot_user }}"
+    group: "{{ knot_group }}"
   with_items: "{{ knot_zones }}"
   when: item.src_file is defined
 
 - name: check zone files integrity
-  raw: knotc zone-check {{ item.name }}
+  raw: "knotc zone-check {{ item.name }}"
   register: "results"
   with_items: "{{ knot_zones }}"
   ignore_errors: yes
 
-- fail: msg="A zone seems to be not loadable, please check. Trace:\n {{ item.stderr }}"
+- fail:
+    msg: "A zone seems to be not loadable, please check. Trace:\n {{ item.stderr }}"
   when: item.rc != 0
   with_items: "{{ results.results }}"
 
 - name: reload knot
-  service: name={{ knot_daemon }} state=reloaded
+  service:
+    name: "{{ knot_daemon }}"
+    state: reloaded

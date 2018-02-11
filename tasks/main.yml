@@ -23,7 +23,7 @@
   template:
     src: knot.conf.j2
     dest: "{{ knot_install_dir }}/etc/knot/knot.conf"
-    mode: 640
+    mode: 0640
     owner: "{{ knot_user }}"
     group: "{{ knot_group }}"
     validate: "knotc -c %s conf-check"
@@ -34,6 +34,13 @@
     name: "{{ knot_daemon }}"
     enabled: True
     state: started
+
+- name: ensure lib directory has the right permissions
+  file:
+    path: "/var/lib/knot"
+    owner: "{{ knot_user  }}"
+    group: "{{ knot_group }}"
+    state: directory
 
 - include: zones.yml
   tags: zones

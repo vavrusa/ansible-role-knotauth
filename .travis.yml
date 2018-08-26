@@ -3,7 +3,7 @@ sudo: required
 
 before_install:
   - pip install ansible==2.6.1
-  - apt-get install dnsutils -y
+  - sudo apt-get install dnsutils -y
 
 script:
   - ansible-playbook -i tests/inventory tests/main.yml

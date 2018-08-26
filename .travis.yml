@@ -8,4 +8,4 @@ before_install:
 script:
   - ansible-playbook -i tests/inventory tests/main.yml
   - ss -lnpu | grep 53
-  - dig @127.0.0.1:5353 mysuperapp.mydomain.com
+  - dig @127.0.0.1 -p 5353 mysuperapp.mydomain.com

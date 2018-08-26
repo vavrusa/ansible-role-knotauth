@@ -10,4 +10,4 @@ script:
   - ss -lnpu | grep 53
   - sudo cat /etc/knot/zones/mydomain.com.zone
   - sudo cat /etc/knot/knot.conf
-  - dig @127.0.0.1 -p 5353 mysuperapp.mydomain.com
+  - dig @127.0.0.1 -p 5353 mysuperapp.mydomain.com +norecurse

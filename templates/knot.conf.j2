@@ -24,6 +24,9 @@ key:
 {% endif %}
 {% endfor %}
 
+# Server-specific extras
+{{ knot_extras }}
+
 # Zone lists
 zone:
 {% for zone in knot_zones %}
@@ -39,7 +42,4 @@ zone:
     file: {{ zone.file }}
 {% endif %}
 {% endfor %}
-
-# Server-specific extras
-{{ knot_extras }}
 

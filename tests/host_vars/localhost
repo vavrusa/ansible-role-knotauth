@@ -4,7 +4,7 @@
 knot_user: knot
 knot_group: knot
 knot_interfaces:
-  - 127.0.0.1
+  - 127.0.0.1@5353
   - "{{ ansible_default_ipv4.address }}"
 knot_zones:
   - { name: 'mydomain.com', storage: "{{ knot_install_dir }}/etc/knot/zones", file: "mydomain.com.zone", src_file: 'files/mydomain.com.zone' }

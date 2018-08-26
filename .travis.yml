@@ -8,4 +8,5 @@ before_install:
 script:
   - ansible-playbook -i tests/inventory tests/main.yml
   - ss -lnpu | grep 53
+  - cat /etc/knot/zones/mydomain.com.zone
   - dig @127.0.0.1 -p 5353 mysuperapp.mydomain.com

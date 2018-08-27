@@ -7,7 +7,8 @@ before_install:
 
 script:
   - ansible-playbook -i tests/inventory tests/main.yml
-  - ss -lnpu | grep 53
+  - ss -lnpu | grep 5353
   - sudo cat /etc/knot/zones/mydomain.com.zone
   - sudo cat /etc/knot/knot.conf
   - dig @127.0.0.1 -p 5353 mysuperapp.mydomain.com +norecurse
+  - dig @127.0.0.1 -p 5353 mysuperapp.mydomain.com +norecurse +short | grep "192.0.2.3"

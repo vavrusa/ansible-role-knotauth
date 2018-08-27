@@ -44,6 +44,12 @@ Make Knot DNS listen on specific interfaces or ports. By default it listens on d
 	  - { name: 'example.com', file: '/tmp/example.zone', template: 'default', module: 'mymodule' }
 
 List of enabled zones. `name` is the only mandatory field, rest is undefined by default.
+
+This is an example that permits to push zone file for a zone:
+
+        knot_zones:
+          - { name: 'example.net', file: '/etc/knot/example.net.zone', src_file: 'files/example.net.zone' }
+
 You can reference defined templates or modules here.
 
 	knot_config_extras: |

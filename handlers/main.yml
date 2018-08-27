@@ -1,3 +1,4 @@
 ---
 - name: restart knot
-  service: "name={{ knot_daemon }} state=restarted"
+  shell: knotc reload
+  #service: "name={{ knot_daemon }} state=restarted"

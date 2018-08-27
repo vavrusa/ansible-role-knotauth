@@ -1,0 +1,20 @@
+$TTL 1
+
+$ORIGIN mydomain.com.
+mydomain.com. 600 IN SOA ns1.mydomain.com. (
+  hostmaster.mydomain.com.
+  2018082601
+  86400
+  7200
+  604800
+  86400
+)
+
+$TTL 86400
+
+@       NS      ns1.mydomain.com.
+@       NS      ns2.mydomain.com.
+
+mysuperapp     A    192.0.2.3
+mysuperapp2     A   192.0.2.4
+mysuperapp3     A   192.0.2.5

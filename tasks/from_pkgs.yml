@@ -1,32 +1,51 @@
 ---
+- name: ensure dependencies are installed (Debian/Ubuntu)
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg2
+    state: present
+  when: ansible_os_family == "Debian"
+
 # Ubuntu
-- name: repository (Ubuntu)
-  apt_repository: repo="ppa:cz.nic-labs/knot-dns" state=present
+- name: add the repository (Ubuntu)
+  apt_repository:
+    repo: "ppa:cz.nic-labs/knot-dns"
+    state: present
   when: ansible_distribution == "Ubuntu"
 
 # Debian
-- name: repository keys (Debian)
-  apt_key: url=https://deb.knot-dns.cz/knot/apt.gpg state=present
+- name: add repository keys (Debian)
+  apt_key:
+    url: https://deb.knot-dns.cz/knot/apt.gpg
+    state: present
   when: ansible_distribution == "Debian"
-- name: repository (Debian)
-  apt_repository: repo="deb https://deb.knot-dns.cz/knot/ {{ ansible_lsb.codename }} main" state=present
+
+- name: add the repository (Debian)
+  apt_repository:
+    repo: "deb https://deb.knot-dns.cz/knot/ {{  ansible_distribution_release }} main"
+    state: present
   when: ansible_distribution == "Debian"
 
 # Debian Family (Debian, Ubuntu)
-- name: packages (Debian/Ubuntu)
-  apt: pkg=knot update_cache=yes state=present
+- name: make sure knot is installed (Debian/Ubuntu)
+  apt:
+    name: knot
+    update_cache: yes
+    state: present
   when: ansible_os_family == "Debian"
 
 # FreeBSD Family
 - name: packages (FreeBSD)
-  pkgng: name={{ item }} state=present
-  with_items:
-    - dns/knot2
+  pkgng:
+    name: "dns/knot2"
+    state: present
   when: ansible_os_family == "FreeBSD"
 
 # RedHat Family (RedHat, Fendora, CentOS, Amazon, etc)
-- name: packages (RedHat)
-  yum: >
-    name=knot
-    state=present
+- name: make sure knot is installed (RedHat)
+  yum:
+    name: knot
+    state: present
   when: ansible_os_family == "RedHat"

@@ -15,8 +15,26 @@ knot_interfaces:
 knot_keys:
   - { id: 'slave1_key', algorithm: 'hmac-md5', secret: 'Wg==' }
 knot_zones:
-  - { name: 'example.com', template: 'default' }
-knot_extras: |
-  server:
-    rate-limit: 10
+  - { name: 'example.com', storage: '/var/lib/knot/zones', file: 'example.com.zone' }
 
+# This doesn't work, didn't fix
+# knot_extras: |
+#   server:
+#     rate-limit: "10"
+
+freebsd_source_deps:
+  - security/nettle
+  - security/gnutls
+  - devel/jansson
+  - sysutils/liburcu
+  - databases/lmdb
+
+debian_source_deps:
+  - gcc
+  - make
+  - libc6-dev
+  - libtool
+  - autoconf
+  - liburcu-dev
+  - libgnutls28-dev
+  - libjansson-dev

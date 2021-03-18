@@ -25,7 +25,7 @@ key:
 {% endfor %}
 
 # Server-specific extras
-{{ knot_extras }}
+{{ knot_extras|default("") }}
 
 # Zone lists
 zone:
@@ -37,8 +37,10 @@ zone:
 {% if 'module' in zone %}
     module: {{ zone.module }}
 {% endif %}
+{% if 'storage' in zone %}
+    storage: {{ zone.storage }}
+{% endif %}
 {% if 'file' in zone %}
     file: {{ zone.file }}
 {% endif %}
 {% endfor %}
-

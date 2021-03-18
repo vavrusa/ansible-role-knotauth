@@ -13,7 +13,7 @@ knot_interfaces:
   - "{{ ansible_default_ipv4.address }}"
   - "{{ ansible_default_ipv6.address }}"
 knot_keys:
-  - { id: 'slave1_key', algorithm: 'hmac-md5', secret: 'Wg==' }
+  - { id: 'slave1_example_key', algorithm: 'hmac-md5', secret: 'Wg==' }
 knot_zones:
   - { name: 'example.com', storage: '/var/lib/knot/zones', file: 'example.com.zone' }
 
